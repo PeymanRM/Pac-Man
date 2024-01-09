@@ -99,6 +99,19 @@ def tinyMazeSearch(problem):
     w = Directions.WEST
     return  [s, s, w, s, w, w, s, w]
 
+def recursiveDFS(node, problem, explored):
+    (state, cost, path) = node
+    if problem.isGoalState(state):
+        return path
+    if not (state in explored):
+        explored.add(state)
+        for next_state, next_action, next_cost in problem.expand(state):
+            totalCost = cost + next_cost
+            totalPath = path + [next_action]
+            newNode = (next_state, totalCost, totalPath)
+            result = recursiveDFS(newNode, problem, explored)
+            if result:
+                return result 
 
 def depthFirstSearch(problem):
     """
@@ -113,28 +126,29 @@ def depthFirstSearch(problem):
     print("Start:", problem.getStartState())
     print("Is the start a goal?", problem.isGoalState(problem.getStartState()))
     """
-    "*** YOUR CODE HERE ***"
-    util.raiseNotDefined()
+    startNode = (problem.getStartState(), 0, [])
+    explored = set()
+    return recursiveDFS(startNode, problem, explored)
 
 def breadthFirstSearch(problem):
     """Search the shallowest nodes in the search tree first."""
     frontier = util.Queue()
     startNode = (problem.getStartState(), 0, [])
     frontier.push(startNode)
-    expanded = set()
+    explored = set()
 
     while not (frontier.isEmpty()):
         (state, cost, path) = frontier.pop()
         if problem.isGoalState(state):
             return path
-        if not (state in expanded):
-            expanded.add(state)
+        if not (state in explored):
+            explored.add(state)
             for next_state, next_action, next_cost in problem.expand(state):
                 totalCost = cost + next_cost
                 totalPath = path + [next_action]
                 newNode = (next_state, totalCost, totalPath)
                 frontier.push(newNode)
-    util.raiseNotDefined()
+    return[]
 
 def nullHeuristic(state, problem=None):
     """
