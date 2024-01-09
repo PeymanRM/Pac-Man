@@ -165,7 +165,7 @@ def aStarSearch(problem, heuristic=nullHeuristic):
     """Search the node that has the lowest combined cost and heuristic first."""
     fringe = util.PriorityQueue()
     startNode = (problem.getStartState(), 0, [])
-    fringe.push(startNode, heuristic(problem.getStartState(), problem))
+    fringe.update(startNode, 0 + heuristic(problem.getStartState(), problem))
     explored = set()
 
     while not (fringe.isEmpty()):
@@ -178,10 +178,50 @@ def aStarSearch(problem, heuristic=nullHeuristic):
                 totalCost = cost + nextCost
                 totalPath = path + [nextAction]
                 newNode = (nextState, totalCost, totalPath)
-                fringe.push(newNode, totalCost + heuristic(nextState, problem))
+                fringe.update(newNode, totalCost + heuristic(nextState, problem))
+    return[]
+
+def uniformCostSearch(problem):
+    fringe = util.PriorityQueue()
+    startNode = (problem.getStartState(), 0, [])
+    fringe.update(startNode, 0, problem)
+    explored = set()
+
+    while not (fringe.isEmpty()):
+        (state, cost, path) = fringe.pop()
+        if problem.isGoalState(state):
+            return path
+        if not (state in explored):
+            explored.add(state)
+            for nextState, nextAction, nextCost in problem.expand(state):
+                totalCost = cost + nextCost
+                totalPath = path + [nextAction]
+                newNode = (nextState, totalCost, totalPath)
+                fringe.update(newNode, totalCost)
+    return[]
+
+def greedySearch(problem, heuristic=nullHeuristic):
+    fringe = util.PriorityQueue()
+    startNode = (problem.getStartState(), 0, [])
+    fringe.update(startNode, heuristic(problem.getStartState(), problem))
+    explored = set()
+
+    while not (fringe.isEmpty()):
+        (state, cost, path) = fringe.pop()
+        if problem.isGoalState(state):
+            return path
+        if not (state in explored):
+            explored.add(state)
+            for nextState, nextAction, nextCost in problem.expand(state):
+                totalCost = cost + nextCost
+                totalPath = path + [nextAction]
+                newNode = (nextState, totalCost, totalPath)
+                fringe.update(newNode, heuristic(nextState, problem))
     return[]
 
 # Abbreviations
 bfs = breadthFirstSearch
 dfs = depthFirstSearch
 astar = aStarSearch
+ucs = uniformCostSearch
+gs = greedySearch
