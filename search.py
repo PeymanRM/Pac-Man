@@ -129,7 +129,24 @@ def depthFirstSearch(problem):
     """
     startNode = (problem.getStartState(), 0, [])
     explored = set()
-    return recursiveDFS(startNode, problem, explored)
+
+    ### uncomment the line below for using recursive DFS -Peyman Roohi-Moghadam ###
+    # return recursiveDFS(startNode, problem, explored)
+
+    stack = util.Stack()
+    stack.push(startNode)
+
+    while not (stack.isEmpty()):
+        (state, cost, path) = stack.pop()
+        if problem.isGoalState(state):
+            return path
+        if not (state in explored):
+            explored.add(state)
+            for next_state, next_action, next_cost in problem.expand(state):
+                totalCost = cost + next_cost
+                totalPath = path + [next_action]
+                newNode = (next_state, totalCost, totalPath)
+                stack.push(newNode)
 
 def breadthFirstSearch(problem):
     """Search the shallowest nodes in the search tree first."""
