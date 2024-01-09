@@ -133,22 +133,22 @@ def depthFirstSearch(problem):
 
 def breadthFirstSearch(problem):
     """Search the shallowest nodes in the search tree first."""
-    frontier = util.Queue()
+    fringe = util.Queue()
     startNode = (problem.getStartState(), 0, [])
-    frontier.push(startNode)
+    fringe.push(startNode)
     explored = set()
 
-    while not (frontier.isEmpty()):
-        (state, cost, path) = frontier.pop()
+    while not (fringe.isEmpty()):
+        (state, cost, path) = fringe.pop()
         if problem.isGoalState(state):
             return path
         if not (state in explored):
             explored.add(state)
-            for next_state, next_action, next_cost in problem.expand(state):
-                totalCost = cost + next_cost
+            for nextState, next_action, nextCost in problem.expand(state):
+                totalCost = cost + nextCost
                 totalPath = path + [next_action]
-                newNode = (next_state, totalCost, totalPath)
-                frontier.push(newNode)
+                newNode = (nextState, totalCost, totalPath)
+                fringe.push(newNode)
     return[]
 
 def nullHeuristic(state, problem=None):
