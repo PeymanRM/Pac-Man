@@ -164,8 +164,8 @@ def manhattanHeuristic(state, problem):
 def aStarSearch(problem, heuristic=nullHeuristic):
     """Search the node that has the lowest combined cost and heuristic first."""
     fringe = util.PriorityQueue()
-    startNode = (problem.getStartState(), heuristic(problem.getStartState(), problem), [])
-    fringe.push(startNode, startNode[1])
+    startNode = (problem.getStartState(), 0, [])
+    fringe.push(startNode, heuristic(problem.getStartState(), problem))
     explored = set()
 
     while not (fringe.isEmpty()):
@@ -175,13 +175,11 @@ def aStarSearch(problem, heuristic=nullHeuristic):
         if not (state in explored):
             explored.add(state)
             for nextState, nextAction, nextCost in problem.expand(state):
-                totalCost = cost - heuristic(state, problem) + nextCost + heuristic(nextState, problem)
+                totalCost = cost + nextCost
                 totalPath = path + [nextAction]
                 newNode = (nextState, totalCost, totalPath)
-                fringe.push(newNode, totalCost)
+                fringe.push(newNode, totalCost + heuristic(nextState, problem))
     return[]
-    util.raiseNotDefined()
-
 
 # Abbreviations
 bfs = breadthFirstSearch
