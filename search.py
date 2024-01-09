@@ -112,6 +112,7 @@ def recursiveDFS(node, problem, explored):
             result = recursiveDFS(newNode, problem, explored)
             if result:
                 return result 
+        return []
 
 def depthFirstSearch(problem):
     """
@@ -157,9 +158,28 @@ def nullHeuristic(state, problem=None):
     """
     return 0
 
+def manhattanHeuristic(state, problem):
+    return abs(state[0] - problem.goal[0]) + abs(state[1] - problem.goal[1])
+
 def aStarSearch(problem, heuristic=nullHeuristic):
     """Search the node that has the lowest combined cost and heuristic first."""
-    "*** YOUR CODE HERE ***"
+    fringe = util.PriorityQueue()
+    startNode = (problem.getStartState(), heuristic(problem.getStartState(), problem), [])
+    fringe.push(startNode, startNode[1])
+    explored = set()
+
+    while not (fringe.isEmpty()):
+        (state, cost, path) = fringe.pop()
+        if problem.isGoalState(state):
+            return path
+        if not (state in explored):
+            explored.add(state)
+            for nextState, nextAction, nextCost in problem.expand(state):
+                totalCost = cost - heuristic(state, problem) + nextCost + heuristic(nextState, problem)
+                totalPath = path + [nextAction]
+                newNode = (nextState, totalCost, totalPath)
+                fringe.push(newNode, totalCost)
+    return[]
     util.raiseNotDefined()
 
 
