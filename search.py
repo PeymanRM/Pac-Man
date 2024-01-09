@@ -184,7 +184,7 @@ def aStarSearch(problem, heuristic=nullHeuristic):
 def uniformCostSearch(problem):
     fringe = util.PriorityQueue()
     startNode = (problem.getStartState(), 0, [])
-    fringe.update(startNode, 0, problem)
+    fringe.update(startNode, 0)
     explored = set()
 
     while not (fringe.isEmpty()):
