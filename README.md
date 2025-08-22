@@ -9,7 +9,7 @@
 
 1. Breadth-First Search (BFS)
 2. Non-recursive Depth-First Search (DFS)
-3. Recursive Depth-First Search
+3. Recursive Depth-First Search (DFS)
 4. Uniform-Cost Search (UCS)
 5. Greedy Search (GS)
 6. A* Search (with Manhattan heuristic)
