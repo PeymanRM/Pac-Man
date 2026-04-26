@@ -12,7 +12,7 @@
 3. Recursive Depth-First Search (DFS)
 4. Uniform-Cost Search (UCS)
 5. Greedy Search (GS)
-6. A* Search (with Manhattan heuristic)
+6. A* Search (with Manhattan distance heuristic)
 
 ## How to Use
 
@@ -37,10 +37,19 @@ python pacman.py -l <layout> -p SearchAgent -a fn=<algorithm>
       ```bash
       python pacman.py -l tinyMaze -p SearchAgent -a fn=bfs
       ```
-2. Running A* search on a big maze with Manhattan heuristic:
+2. Running A* search on a big maze with Manhattan distance heuristic:
       ```bash
      python pacman.py -l bigMaze -p SearchAgent -a fn=astar,heuristic=manhattanHeuristic
       ```
+
+## Visuals
+
+Images and animations (GIFs) demonstrating the execution of these algorithms on different maze layouts are provided in the images and gifs folders.
+
+### Sample Visuals
+- BFS solving mediumMaze
+<img src="https://raw.githubusercontent.com/PeymanRM/Pac-Man/refs/heads/main/imgs/BFS-mediumMaze.gif" alt="bfs" />
+
 
 ## Acknowledgments
 
